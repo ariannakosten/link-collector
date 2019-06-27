@@ -1,4 +1,5 @@
 class Catagory < ActiveRecord::Base
-  belongs_to :links
+  has_many :links
+  belongs_to :user
   
 end

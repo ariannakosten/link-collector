@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-  has_many :links
-  has_many :catagories, through :links
+  has_secure_password
+  has_many :catagories
+  has_many :links, through :catagories
 
 
 end
