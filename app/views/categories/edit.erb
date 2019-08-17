@@ -1,0 +1,11 @@
+<h1>Edit <%= @category.name %></h1>
+
+<form action="/categories/<%=@category.id %>" method="POST">
+  <label> Category Name </label>
+  <input type="text" name="name" value="<%=@category.name %>"> </br>
+
+  <input type="submit" value="Update">
+</form><br>
+
+<a href="/home">Home</a> |       
+<a href="/logout">Log out</a>
