@@ -1,8 +1,8 @@
-<h1>Edit <%= @category.name %></h1>
+<h1>Edit <%= @category.title %></h1>
 
 <form action="/categories/<%=@category.id %>" method="POST">
   <label> Category Name </label>
-  <input type="text" name="name" value="<%=@category.name %>"> </br>
+  <input type="text" name="title" value="<%=@category.title %>"> </br>
 
   <input type="submit" value="Update">
 </form><br>
