@@ -1,0 +1,26 @@
+<h2>Link </h2>
+<p><%= @link.name %></p>
+<% if !@link.description.empty? %>
+<h4>Description:</h4>
+<p><%= @link.description %></p>
+<% end %><br><br>
+
+<% if !@link.categories.empty? %>
+  <h4>Categories: </h4>
+  <ul>
+    <% @link.categories.uniq.each do |category| %>
+    <li><a href="/categories/<%= category.id %>"><%= category.title %></a></li>
+  </ul>
+  <% end %>
+<% end %><br><br>
+
+<p>Need to make changes? Edit link details <a href="/links/<%= @link.id %>/edit">here</a>.</p><br><br>
+
+<form method="POST" action="/links/<%= @link.id %>">
+  <input id="hidden" type="hidden" name="_method" value="DELETE">
+  <input type="submit" id="submit" value="Delete Link"><br>
+</form><br>
+
+<p><a href="/home">Home</a> |        
+<a href="/logout">Log out</a></p>
+
