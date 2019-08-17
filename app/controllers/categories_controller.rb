@@ -1,4 +1,4 @@
-class CategoriesController < Sinatra::Base
+class CategoriesController < ApplicationController
   
   get '/categories' do
     if logged_in?
