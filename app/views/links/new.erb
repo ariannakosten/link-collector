@@ -1,8 +1,8 @@
 <h2>New Link</h2>
 <form method="post" action="/links">
-  <label>Title:</label>
+  <label>Paste Link:</label>
   <input type="text" id="link_name" name="link[name]"><br><br>
-  <label>Short Description (optional):</label><br>
+  <label>Description (optional):</label><br>
   <textarea rows="10" cols="80" id="description" name="link[description]"></textarea><br><br>  
   
   <h4>Category</h4>
@@ -10,13 +10,10 @@
   <label>Category:</label>
   <input type="text" name="category[title]" id="category_title"></input><br><br>
 
-  
-  <% if !@categories.empty? %>
-    <label>Or assign your link to an existing category:</label><br>
+  <label>Or assign your link to an existing category:</label><br>
     <% @categories.each do |category| %>
       <input type="checkbox" name="link[category_ids][]" id="<%= category.id %>" value="<%= category.id %>"><%= category.title %></input>
     <% end %><br>
-  <% end %><br>
   
   <input type="submit" value="Add">
 </form><br>
