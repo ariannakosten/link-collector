@@ -41,10 +41,16 @@ class LinksController < ApplicationController
     erb :'links/show'
   end
 
-  post "/links" do
+  post "/links" do    #GOOD
     logged_in? 
-    Link.create(params[:id])
+    Link.create(params[:link][:category])
     redirect "/links"
+  end
+  
+  delete '/links/:id' do      #GOOD
+    @link = Link.find_by_id(params[:id])
+    @link.destroy
+    redirect '/links'
   end
 end
 
@@ -109,10 +115,4 @@ end
   #   end
   # end
   
-  delete '/links/:id' do
-    @link = Link.find_by_id(params[:id])
-    @link.delete
-    redirect '/links'
-  end
   
-# end
