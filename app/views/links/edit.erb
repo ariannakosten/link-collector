@@ -3,31 +3,12 @@
   <input id="hidden" type="hidden" name="_method" value="PATCH">
   <label>Link:</label>
   <input type="text" id="link_name" name="link[name]" value="<%= @link.name %>"><br><br>
-  <label>Description:</label>
-  <textarea rows="10" cols="80" id="description" name="link[description]"><%= @link.description %></textarea><br><br>
-
-  <% if !@link.description.empty? %>
-    <h4>Description (optional):</h4>
-    <p><%= @link.description %></p>
-  <% end %><br><br>
-  
-  <!--<% if !@categories.empty? %>-->
-  <!--  <% @categories.each do |category| %>-->
-  <!--    <input type="checkbox" name="link[category_ids][]" id="<%= category.id %>" value="<%= category.id %>" <%= 'checked' if @link.categories.include?(category) %>><%= category.title %></input>-->
-  <!--  <% end %><br>-->
-  <!--<% end %><br>-->
-  
-  <h4>Category Assignment</h4>
-  <label>Edit your links category:</label><br><br>
-  <label>Category:</label>
+  <label>Description:</label><br>
+  <textarea rows="5" cols="80" id="description" name="link[description]"><%= @link.description %></textarea><br><br>
+  <label>Edit your link's Category:</label><br>
   <input type="text" name="category[title]" id="category_title"></input><br><br>
   
-  <label>Or assign your link to an existing category:</label><br>
-    <% @categories.each do |category| %>
-      <input type="checkbox" name="link[category_ids][]" id="<%= category.id %>" value="<%= category.id %>" <%= 'checked' if @link.categories.include?(category) %>><%= category.title %></input>
-    <% end %><br>
-  
-  <input type="submit" value="Submit">
+  <input type="submit" value="Update">
 </form><br>
 
 <a href="/home">Home</a> |        
