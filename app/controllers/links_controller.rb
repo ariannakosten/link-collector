@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-   get '/links' do
+  get '/links' do
     if logged_in?
       @links = Link.all
       erb :'links/index'
@@ -11,29 +11,25 @@ class LinksController < ApplicationController
   get '/links/new' do
     if logged_in?
       @categories = Category.all
-      #@categories = @user.categories.uniq.sort_by { |category| category.title }
       erb :'links/new'
     else 
       redirect '/login'
     end
   end
 
-  get "/links/:id/edit" do
+  get "/links/:id/edit" do  
    logged_in? 
-    @error_message = params[:error]
     @link = Link.find(params[:id])
     erb :'links/edit'
   end
-
-  post "/links/:id" do
-    logged_in? 
-    @link = Link.find(params[:id])
-    # unless Link.valid_params?(params)
-    #   redirect "/links/#{@link.id}/edit?error=invalid link info"
-    # end
-    @link.update(params.select{|k|k=="name" || k=="description" || k=="category"})
-    redirect "/links/#{@link.id}"
+  
+  patch '/links/:id' do   
+    @link = Link.find_by_id(params[:id])    
+    @link.update(params[:link])
+        
+      redirect "/links/#{@link.id}"
   end
+  # @link.update(params.select{|k|k=="name" || k=="description" || k=="category"})
 
   get "/links/:id" do
     logged_in? 
@@ -41,13 +37,13 @@ class LinksController < ApplicationController
     erb :'links/show'
   end
 
-  post "/links" do    #GOOD
+  post "/links" do    
     logged_in? 
     Link.create(params[:link][:category])
     redirect "/links"
   end
   
-  delete '/links/:id' do      #GOOD
+  delete '/links/:id' do      
     @link = Link.find_by_id(params[:id])
     @link.destroy
     redirect '/links'
