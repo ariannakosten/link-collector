@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   
   post '/signup' do
     if params[:username] == "" || params[:password] == ""
+      flash[:field_error] = "All fields are required."
       redirect '/signup'
     else 
       @user = User.create(username: params[:username], password: params[:password])
@@ -31,13 +32,15 @@ class UsersController < ApplicationController
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect '/home'
-    else
+    elseif params[:username] == "" || params[:password] == ""
+       flash[:field_error] = "All fields are required."
       redirect '/login'
     end
   end
   
   get '/home' do 
     if logged_in?
+      @user = current_user
       erb :'users/home'
     else 
       redirect '/'
@@ -50,5 +53,4 @@ class UsersController < ApplicationController
       redirect '/'
     end
   end
-  
 end
