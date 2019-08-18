@@ -10,12 +10,20 @@ class LinksController < ApplicationController
   
   get '/links/new' do
     if logged_in?
-      @categories = Category.all
+      # @categories = Category.all
       erb :'links/new'
     else 
       redirect '/login'
     end
   end
+  
+  # post '/links' do
+  #     @links.new(params[:link])
+  #     # dream.categories << Category.find_or_create_by(name: params[:category][:name1]) if !params[:category][:name1].empty?
+  #     # dream.categories << Category.find_or_create_by(name: params[:category][:name2]) if !params[:category][:name2].empty?
+  #     redirect '/links'
+  #   end
+  
 
   get "/links/:id/edit" do  
    logged_in? 
