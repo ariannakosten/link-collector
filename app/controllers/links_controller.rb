@@ -1,8 +1,20 @@
 class LinksController < ApplicationController
   
+  # get "/clubs" do
+  #   redirect_if_not_logged_in 
+  #   @clubs = GolfClub.all
+  #   erb :'golf_clubs/index'
+  # end
+
+  # get "/clubs/new" do
+  #   redirect_if_not_logged_in 
+  #   @error_message = params[:error]
+  #   erb :'golf_clubs/new'
+  # end
+  
    get '/links' do
     if logged_in?
-      @links = user.links
+      @links = Link.all
       erb :'links/index'
     else
       redirect '/login'
@@ -11,7 +23,8 @@ class LinksController < ApplicationController
   
   get '/links/new' do
     if logged_in?
-      @categories = user.categories.uniq.sort_by { |category| category.title }
+      @categories = Category.all
+      #@categories = @user.categories.uniq.sort_by { |category| category.title }
       erb :'links/new'
     else 
       redirect '/login'
@@ -22,7 +35,7 @@ class LinksController < ApplicationController
     if params[:link][:description] == "" || params[:link][:name] == ""
       redirect '/links/new'
     else
-      link = user.links.create(params[:link])
+      link = @user.links.create(params[:link])
       link.categories << Category.find_or_create_by(title: params[:category][:title]) if !params[:category][:title].empty?
       redirect '/links'
     end
@@ -40,7 +53,7 @@ class LinksController < ApplicationController
   get '/links/:id/edit' do
     if logged_in?
       @link = Link.find_by_id(params[:id])
-      @categories = current_user.categories.uniq.sort_by { |category| category.title }
+      @categories = @user.categories.uniq.sort_by { |category| category.title }
       erb :'links/edit'
     else
       redirect '/login'

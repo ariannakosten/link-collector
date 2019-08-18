@@ -5,16 +5,19 @@
   <label>Description (optional):</label><br>
   <textarea rows="10" cols="80" id="description" name="link[description]"></textarea><br><br>  
   
-  <h4>Category</h4>
-  <label>Assign your link to a category:</label><br><br>
+  <h3>Category</h3><br>
+  <label>Assign your link to a category!</label><br><br>
   <label>Category:</label>
   <input type="text" name="category[title]" id="category_title"></input><br><br>
 
-  <label>Or assign your link to an existing category:</label><br>
-    <% @categories.each do |category| %>
-      <input type="checkbox" name="link[category_ids][]" id="<%= category.id %>" value="<%= category.id %>"><%= category.title %></input>
-    <% end %><br>
   
+   <!-- <% if !@categories.empty? %>-->
+   <!-- <label>Or assign your link to an existing category:</label><br>-->
+   <!-- <% @categories.each do |category| %>-->
+   <!--   <input type="checkbox" name="link[category_ids][]" id="<%= category.id %>" value="<%= category.id %>"><%= category.title %></input>-->
+   <!-- <% end %><br>-->
+   <!--<% end %><br>-->
+   
   <input type="submit" value="Add">
 </form><br>
 
