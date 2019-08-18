@@ -1,9 +1,13 @@
 <h2>Link List</h2>
 <ul class = "spacing">
+  <h3>Your Links:</h3>
   <% @links.each do |link| %>
     <li><a href="/links/<%= link.id %>"><%= link.name %></a></li>
   <% end %>
 </ul><br>
+
+  <li>To check out your links by category click <a href="/categories"> here.</a></li>
+  <li>To add another link click <a href="/links/new"> here.</a></li>
 
 <% if @links.empty? %>
   <p>You currently do not have any links saved.</p>
