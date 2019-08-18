@@ -1,4 +1,4 @@
-Site Stash
+WELCOME TO SITE STASH!!!
 
 Usage:
 
