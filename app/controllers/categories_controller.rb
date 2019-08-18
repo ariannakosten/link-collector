@@ -2,7 +2,6 @@ class CategoriesController < ApplicationController
   
   get '/categories' do
     if logged_in?
-      # @categories = user.categories.uniq.sort_by { |category| category.title }
       @categories = Category.all
       erb :'categories/index'
     else
@@ -22,7 +21,7 @@ class CategoriesController < ApplicationController
   
   get "/categories/:id/edit" do
     if logged_in?
-      @category = Category.find(params[:id])
+      @category = Category.find_by_id(params[:id])
       erb :'categories/edit'
     else
       redirect '/login'
@@ -31,11 +30,8 @@ class CategoriesController < ApplicationController
   
   post "/categories/:id" do
     if logged_in?
-    @category = Category.find(params[:id])
-    unless Category.valid_params?(params)
-      redirect "/categories/#{@category.id}/edit?error=invalid category info"
-    end
-    @category.update(params.select{|i| i =="title"})
+    @category = Category.find_by_id(params[:id])
+    @category.update(params.select{|i| i == "name"})
     redirect "/category/#{@category.id}"
   end
 end
