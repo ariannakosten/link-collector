@@ -28,19 +28,19 @@ class UsersController < ApplicationController
   end
 
   post '/login' do
-    @user = User.find_by(username: params[:username])
-    if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      redirect '/home'
-    elseif params[:username] == "" || params[:password] == ""
+    if params[:username] == "" || params[:password] == ""
        flash[:field_error] = "** A valid email & password are required **"
       redirect '/login'
+    else
+    @user = User.find_by(username: params[:username])
+    @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect '/home'
     end
   end
   
   get '/home' do 
     if logged_in?
-      @user = current_user
       erb :'users/home'
     else 
       redirect '/'
@@ -50,7 +50,6 @@ class UsersController < ApplicationController
   get '/logout' do
     if logged_in?
       session.clear
-      flash[:message] = "** You have successfully been logged out **"
       redirect '/'
     else
       redirect '/'

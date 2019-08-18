@@ -2,8 +2,9 @@
 <br><br>
 <h2>Category List</h2>
 
+<% if !@categories.empty? %>
   <p>Select the category title to see all of your saved links in that category:</p>
-
+<% end %>
 
 <ul class="spacing">
   <% @categories.each do |category| %>

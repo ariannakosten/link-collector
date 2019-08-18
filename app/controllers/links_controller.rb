@@ -1,7 +1,9 @@
 class LinksController < ApplicationController
   get '/links' do
     if logged_in?
-      @links = Link.all
+      @user = current_user
+      @links = @user.links
+      # @links = Link.all
       erb :'links/index'
     else
       redirect '/login'
@@ -24,39 +26,84 @@ class LinksController < ApplicationController
   #     redirect '/links'
   #   end
   
-
-  get "/links/:id/edit" do  
-   logged_in? 
+  post '/links' do
+    @user = current_user
+    if params[:name] == "" || params[:description] == "" || params[:category] == "" 
+      redirect to '/links/new'
+    end
+      @link = @user.links.create(name: params[:name], description: params[:description], category: params[:category])
+    redirect to '/links'
+  end 
+  
+  get '/links/:id' do
+    if !logged_in?
+      redirect to '/login'
+    end
     @link = Link.find(params[:id])
-    erb :'links/edit'
+    erb :"links/show"
   end
   
-  patch '/links/:id' do   
-    @link = Link.find_by_id(params[:id])    
-    @link.update(params[:link])
+  get '/links/:id/edit' do
+    if !logged_in?
+      redirect to '/login'
+    end
+    @link = Link.find(params[:id])
+    erb :"links/edit"
+  end
+  
+  patch '/links/:id' do
+    link = Link.find(params[:id])
+    if params[:name] == "" || params[:description] == "" || params[:category] == "" 
+      redirect to "/links/#{params[:id]}/edit"
+    end
+    link.update(name: params[:name], description: params[:description], category: params[:category])
+ 
+    redirect to "/links/#{link.id}"
+  end
+
+  delete '/links/:id/delete' do 
+    if !logged_in?
+      redirect to '/login'
+    else
+    @link = Link.find(params[:id])
+    @link.delete
+      redirect to '/links'
+    end 
+  end 
+
+end 
+#   get "/links/:id/edit" do  
+#   logged_in? 
+#     @link = Link.find(params[:id])
+#     erb :'links/edit'
+#   end
+  
+#   patch '/links/:id' do   
+#     @link = Link.find_by_id(params[:id])    
+#     @link.update(params[:link])
         
-      redirect "/links/#{@link.id}"
-  end
-  # @link.update(params.select{|k|k=="name" || k=="description" || k=="category"})
+#       redirect "/links/#{@link.id}"
+#   end
+#   # @link.update(params.select{|k|k=="name" || k=="description" || k=="category"})
 
-  get "/links/:id" do
-    logged_in? 
-    @link = Link.find(params[:id])
-    erb :'links/show'
-  end
+#   get "/links/:id" do
+#     logged_in? 
+#     @link = Link.find(params[:id])
+#     erb :'links/show'
+#   end
 
-  post "/links" do    
-    logged_in? 
-    Link.create(params[:link][:category])
-    redirect "/links"
-  end
+#   post "/links" do    
+#     logged_in? 
+#     Link.create(params[:link][:category])
+#     redirect "/links"
+#   end
   
-  delete '/links/:id' do      
-    @link = Link.find_by_id(params[:id])
-    @link.destroy
-    redirect '/links'
-  end
-end
+#   delete '/links/:id' do      
+#     @link = Link.find_by_id(params[:id])
+#     @link.destroy
+#     redirect '/links'
+#   end
+# end
 
 # ==============
   

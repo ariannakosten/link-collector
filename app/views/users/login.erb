@@ -1,3 +1,9 @@
+<div class="flash center">
+  <% if flash.has?(:field_error) %>
+    <h3 style="color:red;"><%= flash[:field_error] %></h3>
+  <% end %>
+</div>
+
 <h2>Log In to Site Stash!</h2>
 <form action="/login" method="POST">
   <label>Username:</label>

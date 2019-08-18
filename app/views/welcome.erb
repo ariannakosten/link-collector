@@ -1,3 +1,9 @@
+<div class="flash center">
+  <% if flash.has?(:field_error) %>
+    <h3 style="color:red;"><%= flash[:field_error] %></h3>
+  <% end %>
+</div>
+
 <div class="container">
   <header><img src="http://www.elmwood-inf.croydon.sch.uk/wp-content/uploads/internetlinks.png" class="img-responsive main-image"></header>
   <div class="col-md-8 col-md-offset-2">
