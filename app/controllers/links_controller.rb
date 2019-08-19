@@ -28,6 +28,7 @@ class LinksController < ApplicationController
       @user = current_user
       @category = @user.categories.find_or_create_by(name: params[:category_name])
       @category.user_id = @user.id
+      binding.pry
       @link = Link.create(name: params[:link_name], description: params[:link_description], category_id: @category.id, user_id: @user.id)
       redirect to "/links"
     end
