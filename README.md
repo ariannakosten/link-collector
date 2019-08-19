@@ -8,7 +8,7 @@ Next, run bundle install then shotgun in your terminal. This will prompt you wit
 
 
 USAGE:
-Create a username and password, then start adding your favorite sites to Site Stash!
+Create a username and password, then start adding and organizing your favorite sites to Site Stash!
 
 -----------------------------------------------------------------------------------------------------
 
@@ -17,3 +17,4 @@ Contributing: Bug reports and pull requests are welcome on GitHub at https://git
 License: The gem is available as open source under the terms of the MIT License.
 
 Code of Conduct: Everyone interacting in the reading-list project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the code of conduct.
+
