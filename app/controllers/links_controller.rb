@@ -26,7 +26,7 @@ class LinksController < ApplicationController
       redirect to "/links/new"
     else
       @user = current_user
-      @category = @user.categories.find_or_create_by(name: params[:category_name])
+      @category = Category.find_or_create_by(name: params[:category_name])
       @link = Link.create(name: params[:link_name], description: params[:link_description], category_id: @category.id, user_id: @user.id)
       redirect to "/links"
     end
@@ -59,15 +59,15 @@ class LinksController < ApplicationController
 
   # does not let a user edit a text with blank content
   patch '/links/:id' do
-    binding.pry
+    
     if params[:link_name] != "" && params[:link_description] != "" && params[:category_name] != ""
-      @link = Link.find(params[:id])
+      @link = Link.find_by(id: params[:id])
       @link.update(name: params[:link_name], description: params[:link_description])
-      @category = current_user.categories.find_by(name: params[:category_name])
-      @link.category_id = @category.id
+      @category = @link.category
+      @category.name =  params[:category_name]
       @link.save
-      flash[:field_error] = "Your Link Has Been Succesfully Updated"
-      redirect '/home'
+      @category.save
+      redirect "/links/#{@link.id}"
     else
       flash[:feild_error] = "All fields must be filled out"
       redirect to "/links/#{params[:id]}/edit"

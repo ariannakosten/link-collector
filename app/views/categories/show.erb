@@ -8,6 +8,7 @@
 <h4>Links:</h4>
 
 <% @category.links.each do |link| %>
+<% binding.pry %>
   <li><%= link.name %></li>
   <li><%= link.description %></li>
    <li><a href="links/<%= link.id %>/edit">Edit</a></li>
