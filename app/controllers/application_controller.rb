@@ -11,10 +11,8 @@ class ApplicationController < Sinatra::Base
     use Rack::Flash
   end
 
-
   get '/' do 
     erb :welcome
-
   end
 
   helpers do
@@ -27,12 +25,3 @@ class ApplicationController < Sinatra::Base
     end
   end
 end
-
-  
-
-  
-
-
-    # def current_user
-    #   @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
-    # end

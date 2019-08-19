@@ -4,14 +4,17 @@
   <% end %>
 </div>
 
-<h2>Category: <%= @category.name %></h2>
-<h4>Links:</h4>
+<h2>Category: <%= @category.name.upcase %></h2>
+<h3>Associated Category Links:</h3>
+<li>_______________________________________</li><br>
 
 <% @category.links.each do |link| %>
-<% binding.pry %>
-  <li><%= link.name %></li>
-  <li><%= link.description %></li>
-   <li><a href="links/<%= link.id %>/edit">Edit</a></li>
+<h4>Link</h4><br>
+  <li><%= link.name %></li><br><br>
+  <h4>Description:</h4><br>
+  <li><%= link.description %></li><br><br>
+  <li><a href="links/<%= link.id %>/edit">Edit Info</a></li><br>
+  <li>_______________________________________</li><br>
 <% end %><br><br>
         
 

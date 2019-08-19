@@ -1,17 +1,14 @@
 class CategoriesController < ApplicationController
   
-  # lets user view link categories 
   get '/categories' do
     if logged_in?
       @categories = current_user.categories.all
-      #@catagories = Catagory.all
       erb :'categories/index'
     else
       redirect '/login'
     end
   end
 
-  # does not allow for creation of a blank category
   post '/categories' do
     if params[:name].empty?
       flash[:field_error] = "Category cannot be blank"
@@ -23,7 +20,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # displays a 1 selected category
   get '/categories/:id' do
     if logged_in?
       @category = Category.find_by_id(params[:id])
@@ -97,15 +93,4 @@ class CategoriesController < ApplicationController
       redirect '/login'
     end
   end
-
 end
-  
-  
-#   post "/categories/:id" do
-#     if logged_in?
-#     @category = Category.find_by_id(params[:id])
-#     @category.update(params.select{|i| i == "name"})
-#     redirect "/category/#{@category.id}"
-#   end
-# end
-#end
