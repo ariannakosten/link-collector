@@ -1,31 +1,10 @@
 class CategoriesController < ApplicationController
   
-  # get '/categories' do
-  #   if logged_in?
-  #     @categories = current_user.categories.uniq.sort_by { |category| category.name }
-  #     #@ cat = Category.all
-  #     erb :'categories/index'
-  #   else
-  #     redirect '/login'
-  #   end
-  # end
-
-  # get '/categories/:id' do
-  #   if logged_in?
-  #     @category = Category.find_by_id(params[:id])
-  #     @links = @category.links.select {|link| link.user_id == @user.id }
-  #     erb :'categories/show'
-  #   else
-  #     redirect '/login'
-  #   end
-  # end
-  
-  # =========================================
-  
   # lets user view link categories 
   get '/categories' do
     if logged_in?
       @categories = current_user.categories.all
+      #@catagories = Catagory.all
       erb :'categories/index'
     else
       redirect '/login'
@@ -47,7 +26,8 @@ class CategoriesController < ApplicationController
   # displays a 1 selected category
   get '/categories/:id' do
     if logged_in?
-      @category = Category.find(params[:id])
+      @category = Category.find_by_id(params[:id])
+     #@links = @category.links.select {|link| link.user_id == @user.id }
       erb :'categories/show'
     else
       redirect '/categories/index'
@@ -58,8 +38,8 @@ class CategoriesController < ApplicationController
   # does not let a user edit a category not created by itself
   get '/categories/:id/edit' do
     if logged_in?
-      @category = Category.find(params[:id])
-      if @category.user_id == current_user.id
+      @category = Category.find_by_id(params[:id])
+      if @category.user_id == current_user.id   #not sure if i want this
         erb :'categories/edit'
       else
         redirect '/categories/index'
@@ -120,14 +100,6 @@ class CategoriesController < ApplicationController
 
 end
   
-#   get "/categories/:id/edit" do
-#     if logged_in?
-#       @category = Category.find_by_id(params[:id])
-#       erb :'categories/edit'
-#     else
-#       redirect '/login'
-#     end
-#   end
   
 #   post "/categories/:id" do
 #     if logged_in?

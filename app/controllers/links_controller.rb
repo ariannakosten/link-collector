@@ -67,10 +67,17 @@ class LinksController < ApplicationController
       flash[:field_error] = "Your Link Has Been Succesfully Updated"
       redirect '/home'
     else
-      flash[:feild_error] = "Fields Cannot Be Blank"
+      flash[:feild_error] = "All fields must be filled out"
       redirect to "/links/#{params[:id]}/edit"
     end
   end
+  
+  # @article = Article.find_by_id(params[:id])
+  # @article.title = params[:title]
+  # @article.content = params[:content]
+  # @article.save
+  # redirect to "/articles/#{@article.id}"
+  
   
   delete '/links/:id/delete' do 
     if !logged_in?
