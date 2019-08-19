@@ -7,28 +7,17 @@
 <h2>Category: <%= @category.name %></h2>
 <h4>Links:</h4>
 
-<% @category.links_sort_by_name.each do |link| %>
+<% @category.links.each do |link| %>
   <li><%= link.name %></li>
   <li><%= link.description %></li>
-  <li><%= link.category_name %></li>
-  <li><a href="links/<%= link.id %>/edit">Edit</a></li>
+   <li><a href="links/<%= link.id %>/edit">Edit</a></li>
 <% end %><br><br>
         
-        
-<!--<ul class="spacing">-->
-  <!--<% @links.each do |link| %>-->
-  <!--  <li><a href="/links/<%= link.id %>"><%= link.name %></a></li>-->
-  <!--<% end %>-->
-<!--</ul><br><br>-->
-<!--<a href="/categories/<%=@category.id%>/edit">Edit</a>-->
 
 <a href="/categories">Category List</a> |  
 <a href="/home">Home</a> |       
 <a href="/logout">Log out</a>
 
-
-
-<!--links: <%= @category.links.collect {|l| l.sort} %></h1>-->-->
 
     
  

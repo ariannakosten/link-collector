@@ -27,8 +27,6 @@ class LinksController < ApplicationController
     else
       @user = current_user
       @category = @user.categories.find_or_create_by(name: params[:category_name])
-      @category.user_id = @user.id
-      binding.pry
       @link = Link.create(name: params[:link_name], description: params[:link_description], category_id: @category.id, user_id: @user.id)
       redirect to "/links"
     end
@@ -37,7 +35,9 @@ class LinksController < ApplicationController
   # displays 1 link
   get '/links/:id' do
     if logged_in?
-      @link = Link.find(params[:id])
+      #binding.pry
+      @link = Link.find_by(id: params[:id])
+      @category = @link.category
       erb :'links/show'
     else
       redirect '/login'
@@ -59,7 +59,8 @@ class LinksController < ApplicationController
 
   # does not let a user edit a text with blank content
   patch '/links/:id' do
-    if !params[:link_name] == "" && !params[:link_description] == "" && !params[:category_name] == ""
+    binding.pry
+    if params[:link_name] != "" && params[:link_description] != "" && params[:category_name] != ""
       @link = Link.find(params[:id])
       @link.update(name: params[:link_name], description: params[:link_description])
       @category = current_user.categories.find_by(name: params[:category_name])
@@ -72,12 +73,6 @@ class LinksController < ApplicationController
       redirect to "/links/#{params[:id]}/edit"
     end
   end
-  
-  # @article = Article.find_by_id(params[:id])
-  # @article.title = params[:title]
-  # @article.content = params[:content]
-  # @article.save
-  # redirect to "/articles/#{@article.id}"
   
   
   delete '/links/:id/delete' do 

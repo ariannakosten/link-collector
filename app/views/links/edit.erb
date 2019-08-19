@@ -12,7 +12,7 @@
   <label>Description:</label><br>
   <textarea rows="5" cols="80" id="description" name="link_description"><%= @link.description %></textarea><br><br>
   <label>Edit your link's Category:</label><br>
-  <input type="text" name="category_name" id="category_name"></input><br><br>
+  <input type="text" name="category_name" id="category_name" value= "<%=@category.name %>"></input><br><br>
   
   <input type="submit" value="Update">
 </form><br>
