@@ -1,3 +1,9 @@
+<div class="flash center">
+  <% if flash.has?(:field_error) %>
+    <h3 style="color:red;"><%= flash[:field_error] %></h3>
+  <% end %>
+</div>
+
 <h2>Edit Link Details</h2>
 <form method="POST" action="/links/<%= @link.id %>">
   <input id="hidden" type="hidden" name="_method" value="PATCH">

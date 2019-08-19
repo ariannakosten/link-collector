@@ -1,3 +1,9 @@
+<div class="flash center">
+  <% if flash.has?(:field_error) %>
+    <h3 style="color:red;"><%= flash[:field_error] %></h3>
+  <% end %>
+</div>
+
 <h2>New Link</h2>
 <form method="post" action="/links">
   <label>Paste Link:</label>

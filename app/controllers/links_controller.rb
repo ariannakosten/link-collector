@@ -22,7 +22,7 @@ class LinksController < ApplicationController
   # does not let a user create a blank link details
   post '/links' do
     if params[:link_name] == "" || params[:link_description] == "" || params[:category_name] == ""
-      flash[:field_error] = "Fields cannot be blank"
+      flash[:field_error] = "All fields must be filled out"
       redirect to "/links/new"
     else
       @user = current_user
