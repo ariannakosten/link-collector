@@ -41,11 +41,10 @@ class CategoriesController < ApplicationController
         redirect '/categories/index'
       end
     else
-       redirect '/login'
+      redirect '/login'
     end
   end
 
-  # doesnt let user edit a category with blank content
   patch '/categories/:id' do
     if !params[:name].empty?
       @category = Category.find(params[:id])
@@ -58,8 +57,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # lets user delete their own category 
-  # does not let a user delete a category they did not create
   delete '/categories/:id/delete' do
     if logged_in?
       if current_user.categories.size == 1
@@ -78,8 +75,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # help : created to edit links when the erb
-  # file adds '/categories' to the edit link
   get '/categories/links/:id/edit' do
     if logged_in?
       @link = Link.find(params[:id])
