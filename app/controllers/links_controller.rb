@@ -28,7 +28,7 @@ class LinksController < ApplicationController
       @user = current_user
       @category = @user.categories.find_or_create_by(name: params[:category_name])
       @category.user_id = @user.id
-      @link = Link.create(link: params[:link_name], description: params[:link_description], category: params[:category_name], category_id: @category.id, user_id: @user.id)
+      @link = Link.create(name: params[:link_name], description: params[:link_description], category_id: @category.id, user_id: @user.id)
       redirect to "/links"
     end
   end
@@ -60,7 +60,7 @@ class LinksController < ApplicationController
   patch '/links/:id' do
     if !params[:link_name] == "" && !params[:link_description] == "" && !params[:category_name] == ""
       @link = Link.find(params[:id])
-      @link.update(link: params[:link_name], description: params[:link_description], category: params[:category_name])
+      @link.update(name: params[:link_name], description: params[:link_description])
       @category = current_user.categories.find_by(name: params[:category_name])
       @link.category_id = @category.id
       @link.save
