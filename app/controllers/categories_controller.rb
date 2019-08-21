@@ -57,13 +57,13 @@ class CategoriesController < ApplicationController
     end
   end
 
-  delete '/categories/:id/delete' do
+  delete '/categories/:id' do
     if logged_in?
       if current_user.categories.size == 1
         flash[:field_error] = "Sorry you must have at least one category"
         redirect '/categories/index'
       else
-        @category = Category.find(params[:id])
+        @category = Category.find_by(id: params[:id])
         if @category.user_id == current_user.id
           @category.destroy
           flash[:field_error] = "The category has been deleted successfully"
@@ -75,17 +75,17 @@ class CategoriesController < ApplicationController
     end
   end
 
-  get '/categories/links/:id/edit' do
-    if logged_in?
-      @link = Link.find(params[:id])
-      @category = Category.find(@link.category_id)
-      if @link.user_id == session[:user_id]
-        erb :'links/edit'
-      else
-        redirect '/home'
-      end
-    else
-      redirect '/login'
-    end
-  end
+  # get '/categories/links/:id/edit' do
+  #   if logged_in?
+  #     @link = Link.find(params[:id])
+  #     @category = Category.find(@link.category_id)
+  #     if @link.user_id == session[:user_id]
+  #       erb :'links/edit'
+  #     else
+  #       redirect '/home'
+  #     end
+  #   else
+  #     redirect '/login'
+  #   end
+  # end
 end

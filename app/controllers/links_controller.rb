@@ -64,14 +64,14 @@ class LinksController < ApplicationController
     end
   end
   
-  delete '/links/:id/delete' do 
+  delete '/links/:id' do 
     if !logged_in?
       redirect to '/login'
     else
-    @link = Link.find(params[:id])
+    @link = Link.find_by(id: params[:id])
     @link.destroy
     flash[:field_error] = "Your link has been deleted"
-      redirect to '/links'
+      redirect to '/links/index'
     end 
   end
 end
