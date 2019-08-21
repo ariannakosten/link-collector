@@ -31,6 +31,7 @@ class LinksController < ApplicationController
 
   get '/links/:id' do
     if logged_in?
+     # binding.pry
       @link = Link.find_by(id: params[:id])
       @category = @link.category
       erb :'links/show'
@@ -41,7 +42,7 @@ class LinksController < ApplicationController
 
   get '/links/:id/edit' do
     if logged_in?
-      @link = Link.find(params[:id])
+      @link = Link.find_by(id: params[:id])
       @category = Category.find(@link.category_id)
         erb :'links/edit'
       else
@@ -50,13 +51,13 @@ class LinksController < ApplicationController
     end
 
   patch '/links/:id' do
+    
     if params[:link_name] != "" && params[:link_description] != "" && params[:category_name] != ""
       @link = Link.find_by(id: params[:id])
       @link.update(name: params[:link_name], description: params[:link_description])
-      @category = @link.category
-      @category.name =  params[:category_name]
+      @category = Category.find_or_create_by(name: params[:category_name])
+      @link.category = @category
       @link.save
-      @category.save
       redirect "/links/#{@link.id}"
     else
       flash[:feild_error] = "All fields must be filled out"
@@ -71,7 +72,7 @@ class LinksController < ApplicationController
     @link = Link.find_by(id: params[:id])
     @link.destroy
     flash[:field_error] = "Your link has been deleted"
-      redirect to '/links/index'
+      redirect to '/links'
     end 
   end
 end

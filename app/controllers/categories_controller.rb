@@ -23,7 +23,10 @@ class CategoriesController < ApplicationController
   get '/categories/:id' do
     if logged_in?
       @category = Category.find_by_id(params[:id])
+      binding.pry
+      if current_user.categories.find{|category| category.id == @category.id} 
      #@links = @category.links.select {|link| link.user_id == @user.id }
+     binding.pry
       erb :'categories/show'
     else
       redirect '/categories/index'
@@ -35,7 +38,8 @@ class CategoriesController < ApplicationController
   get '/categories/:id/edit' do
     if logged_in?
       @category = Category.find_by_id(params[:id])
-      if @category.user_id == current_user.id   #not sure if i want this
+      if current_user.categories.find{|category| category.id == @category.id}  
+      
         erb :'categories/edit'
       else
         redirect '/categories/index'
@@ -46,9 +50,9 @@ class CategoriesController < ApplicationController
   end
 
   patch '/categories/:id' do
-    if !params[:name].empty?
-      @category = Category.find(params[:id])
-      @category.update(name:params[:name])
+    if params[:name] != ""
+      @category = Category.find_by(id: params[:id])
+      @category.update(name: params[:name])
       flash[:field_error] = "The category has been updated successfully"
       redirect '/categories/index'
     else
@@ -57,22 +61,22 @@ class CategoriesController < ApplicationController
     end
   end
 
-  delete '/categories/:id' do
-    if logged_in?
-      if current_user.categories.size == 1
-        flash[:field_error] = "Sorry you must have at least one category"
-        redirect '/categories/index'
-      else
-        @category = Category.find_by(id: params[:id])
-        if @category.user_id == current_user.id
-          @category.destroy
-          flash[:field_error] = "The category has been deleted successfully"
-          redirect '/categories/index'
-        end
-      end
-    else
-      redirect '/login'
-    end
+  # delete '/categories/:id' do
+  #   if logged_in?
+  #     if current_user.categories.size == 1
+  #       flash[:field_error] = "Sorry you must have at least one category"
+  #       redirect '/categories/index'
+  #     else
+  #       @category = Category.find_by(id: params[:id])
+  #       if current_user.categories.find{|category| category.id == @category.id} 
+  #         @category.destroy
+  #         flash[:field_error] = "The category has been deleted successfully"
+  #         redirect '/categories/index'
+  #       end
+  #     end
+  #   else
+  #     redirect '/login'
+  #   end
   end
 
   # get '/categories/links/:id/edit' do

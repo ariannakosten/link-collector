@@ -1,3 +1,10 @@
+<div class="flash center">
+  <% if flash.has?(:field_error) %>
+    <h3 style="color:red;"><%= flash[:field_error] %></h3>
+  <% end %>
+</div>
+
+
 <h2>Link List</h2>
 <ul class = "spacing">
   <h3>Your Links:</h3>

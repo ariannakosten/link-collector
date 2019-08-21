@@ -1,12 +1,22 @@
+
+
+<div class="flash center">
+  <% if flash.has?(:field_error) %>
+    <h3 style="color:red;"><%= flash[:field_error] %></h3>
+  <% end %>
+</div>
+
 <h1>Edit Category</h1>
 
-<form action="/categories/<%=@category.id %>" method="POST">
-<input id="hidden" type="hidden" name="_method" value="PATCH">
 
-<label> Category Name </label>
 
-<input type="text" name="name" id="form-name" value="<%=@category.name %>"> </br>
-<input type="submit" value="Update">
+<h2>Edit Your Links Category</h2>
+<form method="POST" action="/categories/<%= @category.id %>">
+  <input id="hidden" type="hidden" name="_method" value="PATCH">
+  <label>Edit your link's Category:</label><br>
+  <input type="text" name="category_name" id="category_name" value= "<%=@category.name %>"></input><br><br>
+  <label>Link:</label>
+  <input type="submit" value="Update">
 </form><br>
 
 <a href="/home">Home</a> |       
