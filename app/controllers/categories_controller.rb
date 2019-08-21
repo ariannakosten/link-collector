@@ -3,6 +3,7 @@ class CategoriesController < ApplicationController
   get '/categories' do
     if logged_in?
       @categories = current_user.categories.all
+      #binding.pry
       erb :'categories/index'
     else
       redirect '/login'
@@ -23,11 +24,14 @@ class CategoriesController < ApplicationController
   get '/categories/:id' do
     if logged_in?
       @category = Category.find_by_id(params[:id])
-      binding.pry
-      if current_user.categories.find{|category| category.id == @category.id} 
-     #@links = @category.links.select {|link| link.user_id == @user.id }
-     binding.pry
-      erb :'categories/show'
+    #  binding.pry
+     # if current_user.categories.find{|category| category.id == @category.id} 
+        #@links = @category.links.select {|link| link.user_id == @user.id }
+        #binding.pry
+         erb :'categories/show'
+      # else
+      #   redirect '/categories/index'
+      # end
     else
       redirect '/categories/index'
     end
@@ -35,15 +39,16 @@ class CategoriesController < ApplicationController
 
   # lets user view category edit form 
   # does not let a user edit a category not created by itself
-  get '/categories/:id/edit' do
+  get'/categories/:id/edit' do
     if logged_in?
       @category = Category.find_by_id(params[:id])
-      if current_user.categories.find{|category| category.id == @category.id}  
+      #
+      #if current_user.categories.find{|category| category.id == @category.id}  
       
         erb :'categories/edit'
-      else
-        redirect '/categories/index'
-      end
+      # else
+      #   redirect '/categories/index'
+      # end
     else
       redirect '/login'
     end
@@ -77,7 +82,7 @@ class CategoriesController < ApplicationController
   #   else
   #     redirect '/login'
   #   end
-  end
+  #end
 
   # get '/categories/links/:id/edit' do
   #   if logged_in?
