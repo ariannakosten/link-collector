@@ -1,21 +1,15 @@
-
-
 <div class="flash center">
   <% if flash.has?(:field_error) %>
     <h3 style="color:red;"><%= flash[:field_error] %></h3>
   <% end %>
 </div>
 
-<h1>Edit Category</h1>
-
-
-
-<h2>Edit Your Links Category</h2>
+<h2>Edit Category: <%= @category.name.upcase %></h2>
+<h3>Edit your link's category name or create a new category to move it to below!</h3><br>
 <form method="POST" action="/categories/<%= @category.id %>">
   <input id="hidden" type="hidden" name="_method" value="PATCH">
-  <label>Edit your link's Category:</label><br>
+  <label>Category Name:</label><br>
   <input type="text" name="category_name" id="category_name" value= "<%=@category.name %>"></input><br><br>
-  <label>Link:</label>
   <input type="submit" value="Update">
 </form><br>
 

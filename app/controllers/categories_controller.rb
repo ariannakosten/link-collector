@@ -3,7 +3,6 @@ class CategoriesController < ApplicationController
   get '/categories' do
     if logged_in?
       @categories = current_user.categories.all
-      #binding.pry
       erb :'categories/index'
     else
       redirect '/login'
@@ -37,8 +36,7 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # lets user view category edit form 
-  # does not let a user edit a category not created by itself
+  
   get'/categories/:id/edit' do
     if logged_in?
       @category = Category.find_by_id(params[:id])
@@ -49,6 +47,10 @@ class CategoriesController < ApplicationController
       # else
       #   redirect '/categories/index'
       # end
+    # if params[:name].empty?
+    #   flash[:field_error] = "Category cannot be blank"
+    #   redirect '/categories/edit'
+    # end
     else
       redirect '/login'
     end
