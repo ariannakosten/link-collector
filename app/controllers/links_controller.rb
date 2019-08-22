@@ -2,13 +2,13 @@ class LinksController < ApplicationController
   
   get '/links' do
     if logged_in?
-      @links = Link.all
-      erb :'links/index'
-    else
-      redirect '/login'
-    end
-  end
-
+      @links = current_user.links 
+         erb :'links/index'
+      else
+         redirect '/login' 
+      end
+   end
+   
   get '/links/new' do
     if logged_in?
       erb :'/links/new'
@@ -33,8 +33,11 @@ class LinksController < ApplicationController
     if logged_in?
       @link = Link.find_by(id: params[:id])
       @category = @link.category
-      binding.pry
-      erb :'links/show'
+      if current_user.links.find{|link| link.id == @link.id} 
+         erb :'links/show'
+      else
+         redirect '/links'
+       end
     else
       redirect '/login'
     end
@@ -44,11 +47,15 @@ class LinksController < ApplicationController
     if logged_in?
       @link = Link.find_by(id: params[:id])
       @category = Category.find(@link.category_id)
-        erb :'links/edit'
+      if current_user.links.find{|link| link.id == @link.id} 
+         erb :'links/edit'
       else
-        redirect '/home'
-      end
+         redirect '/home'
+       end
+    else
+      redirect '/login'
     end
+  end
 
   patch '/links/:id' do
     
@@ -71,8 +78,12 @@ class LinksController < ApplicationController
     else
     @link = Link.find_by(id: params[:id])
     @link.destroy
-    flash[:field_error] = "Your link has been deleted"
+    if current_user.links.find{|link| link.id == @link.id} 
+      flash[:field_error] = "Your link has been deleted"
       redirect to '/links'
+      else
+         redirect '/home'
+       end
     end 
   end
 end

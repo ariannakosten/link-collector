@@ -53,9 +53,7 @@ class CategoriesController < ApplicationController
   end
 
   patch '/categories/:id' do
-    
     if params[:name] != ""
-      
       @category = Category.find_by(id: params[:id])
       @category.update(name: params[:category_name])
       flash[:field_error] = "The category has been updated successfully"
