@@ -31,9 +31,9 @@ class LinksController < ApplicationController
 
   get '/links/:id' do
     if logged_in?
-     # binding.pry
       @link = Link.find_by(id: params[:id])
       @category = @link.category
+      binding.pry
       erb :'links/show'
     else
       redirect '/login'
