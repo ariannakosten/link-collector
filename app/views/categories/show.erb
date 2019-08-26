@@ -12,12 +12,11 @@
 <h4>Link</h4><br>
   <li><%= link.name %></li><br><br>
   <h4>Description:</h4><br>
-  <li><%= link.description %></li><br><br>
-  <li><a href="/categories/<%= @category.id %>/edit">Edit Link's Category</a></li><br>
+  <li><%= link.description %></li><br>
   <li>_______________________________________</li><br>
 <% end %><br><br>
-        
-
+   
+<a href="/categories/<%= @category.id %>/edit">Edit This Category</a> |
 <a href="/categories">Category List</a> |  
 <a href="/home">Home</a> |       
 <a href="/logout">Log out</a>
