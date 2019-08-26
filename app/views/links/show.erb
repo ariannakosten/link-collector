@@ -1,3 +1,9 @@
+<div class="flash center">
+  <% if flash.has?(:field_error) %>
+    <h3 style="color:red;"><%= flash[:field_error] %></h3>
+  <% end %>
+</div>
+
 <h2>Link Details </h2>
 
 <h4>Link:</h4>
@@ -9,7 +15,8 @@
 <h4>Category: </h4>
 <p><%= @category.name %></p><br><br>
 
-<p>Need to make changes? Edit link details <a href="/links/<%= @link.id %>/edit">here</a>.</p><br><br>
+<p>Need to make changes? Edit link details <a href="/links/<%= @link.id %>/edit">here</a>.</p>
+<li>View list of saved links <a href="/links">here</a>.</li><br><br>
 
 <form method="POST" action="/links/<%= @link.id %>">
   <input id="hidden" type="hidden" name="_method" value="DELETE">

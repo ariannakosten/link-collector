@@ -25,6 +25,7 @@ class LinksController < ApplicationController
       @user = current_user
       @category = Category.find_or_create_by(name: params[:category_name])
       @link = Link.create(name: params[:link_name], description: params[:link_description], category_id: @category.id, user_id: @user.id)
+      flash[:field_error] = "Link successfully added!"
       redirect to "/links"
     end
   end
@@ -37,8 +38,8 @@ class LinksController < ApplicationController
          erb :'links/show'
       else
          redirect '/links'
-       end
-    else
+      end
+      else
       redirect '/login'
     end
   end
@@ -51,8 +52,8 @@ class LinksController < ApplicationController
          erb :'links/edit'
       else
          redirect '/home'
-       end
-    else
+      end
+      else
       redirect '/login'
     end
   end
@@ -65,6 +66,7 @@ class LinksController < ApplicationController
       @category = Category.find_or_create_by(name: params[:category_name])
       @link.category = @category
       @link.save
+      flash[:feild_error] = "Link successfully updated!"
       redirect "/links/#{@link.id}"
     else
       flash[:feild_error] = "All fields must be filled out"
@@ -81,9 +83,9 @@ class LinksController < ApplicationController
     if current_user.links.find{|link| link.id == @link.id} 
       flash[:field_error] = "Your link has been deleted"
       redirect to '/links'
-      else
-         redirect '/home'
-       end
+    else
+      redirect '/home'
+      end
     end 
   end
 end
