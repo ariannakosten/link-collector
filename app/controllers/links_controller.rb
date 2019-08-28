@@ -18,16 +18,18 @@ class LinksController < ApplicationController
   end
 
   post '/links' do
-    if params[:link_name] == "" || params[:link_description] == "" || params[:category_name] == ""
-      flash[:field_error] = "All fields must be filled out"
-      redirect to "/links/new"
-    else
+    
+    if links_valid_params(params)
       @user = current_user
       @category = Category.find_or_create_by(name: params[:category_name])
       @link = Link.create(name: params[:link_name], description: params[:link_description], category_id: @category.id, user_id: @user.id)
       flash[:field_error] = "Link successfully added!"
       redirect to "/links"
+    else
+      flash[:field_error] = "All fields must be filled out"
+      redirect to "/links/new"
     end
+    
   end
 
   get '/links/:id' do
@@ -59,8 +61,7 @@ class LinksController < ApplicationController
   end
 
   patch '/links/:id' do
-    
-    if params[:link_name] != "" && params[:link_description] != "" && params[:category_name] != ""
+    if links_valid_params(params)
       @link = Link.find_by(id: params[:id])
       @link.update(name: params[:link_name], description: params[:link_description])
       @category = Category.find_or_create_by(name: params[:category_name])

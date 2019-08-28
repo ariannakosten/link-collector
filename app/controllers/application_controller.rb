@@ -23,5 +23,13 @@ class ApplicationController < Sinatra::Base
     def current_user
       @user ||= User.find(session[:user_id])
     end
+    
+    def links_valid_params(params)
+      if params[:link_name].strip == ""  || params[:link_description].strip == "" || params[:category_name].strip == ""
+        false
+      else
+        true
+      end
+    end
   end
 end
