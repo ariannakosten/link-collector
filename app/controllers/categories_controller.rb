@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   
+  ## shows all of the users categories ##
   get '/categories' do
     if logged_in?
       @categories = current_user.categories.all
@@ -9,6 +10,7 @@ class CategoriesController < ApplicationController
     end
   end
 
+  ## retrieves the specific category and renders show page ##
   get '/categories/:id' do
     if logged_in?
       @category = Category.find_by_id(params[:id])
@@ -22,6 +24,7 @@ class CategoriesController < ApplicationController
       end
    end
   
+  ## renders the edit page for 1 category if the user has created it ##
   get'/categories/:id/edit' do
     if logged_in?
       @category = Category.find_by_id(params[:id])
@@ -35,6 +38,7 @@ class CategoriesController < ApplicationController
      end
   end
 
+  ## updates the category name if params are entered correctly ##
   patch '/categories/:id' do
     if params[:category_name].strip != "" && !Category.find_by(name: params[:category_name]) #if category is empty / cant find the category name
       @category = Category.find_by(id: params[:id])
