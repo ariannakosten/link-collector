@@ -1,5 +1,6 @@
 class LinksController < ApplicationController
   
+  ## shows all of the users links ##
   get '/links' do
     if logged_in?
       @links = current_user.links 
@@ -9,6 +10,7 @@ class LinksController < ApplicationController
       end
    end
    
+  ## gets the form to add a new link ## 
   get '/links/new' do
     if logged_in?
       erb :'/links/new'
@@ -17,8 +19,8 @@ class LinksController < ApplicationController
     end
   end
 
+  ## creates the link if params are valid and user is logged in ##
   post '/links' do
-    
     if links_valid_params(params)
       @user = current_user
       @category = Category.find_or_create_by(name: params[:category_name])
@@ -29,9 +31,9 @@ class LinksController < ApplicationController
       flash[:field_error] = "All fields must be filled out"
       redirect to "/links/new"
     end
-    
   end
 
+  ## renders the specific link to show if it is one the user created ##
   get '/links/:id' do
     if logged_in?
       @link = Link.find_by(id: params[:id])
@@ -45,7 +47,8 @@ class LinksController < ApplicationController
       redirect '/login'
     end
   end
-
+  
+  ## displays the edit page for links ##
   get '/links/:id/edit' do
     if logged_in?
       @link = Link.find_by(id: params[:id])
@@ -59,7 +62,8 @@ class LinksController < ApplicationController
       redirect '/login'
     end
   end
-
+  
+  ## edits the specific link if the user has created it himself and has entered valid params to edit --redirects to link show page ##
   patch '/links/:id' do
     if links_valid_params(params)
       @link = Link.find_by(id: params[:id])
@@ -75,6 +79,7 @@ class LinksController < ApplicationController
     end
   end
   
+  ## deletes current link if user is logged in & has created the link himself --otherwise directs to home or login ##
   delete '/links/:id' do 
     if !logged_in?
       redirect to '/login'
