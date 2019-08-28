@@ -3,11 +3,11 @@ require './config/environment'
 
 class ApplicationController < Sinatra::Base
 
-  configure do
+  configure do  #set configurations
     set :public_folder, 'public'
     set :views, 'app/views'
-    enable :sessions
-    set :session_secret, "linksonlinksonlinks"
+    enable :sessions   #
+    set :session_secret, "linksonlinksonlinks" #helps authenticate against bcrypt passwords keeps sess safe
     use Rack::Flash
   end
 
