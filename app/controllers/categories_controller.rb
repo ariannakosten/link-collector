@@ -45,8 +45,9 @@ class CategoriesController < ApplicationController
   end
 
   patch '/categories/:id' do
-    if params[:name].strip != "" 
-      binding.pry
+    
+    if params[:category_name].strip != "" && !Category.find_by(name: params[:category_name]) 
+      #if you catagory name not taken 
       @category = Category.find_by(id: params[:id])
       @category.update(name: params[:category_name])
       flash[:field_error] = "The category has been updated successfully"
