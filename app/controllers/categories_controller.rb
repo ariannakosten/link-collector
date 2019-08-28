@@ -9,15 +9,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # post '/categories' do
-  #   if params[:name] == ""
-  #     flash[:field_error] = "Category cannot be blank"
-  #     redirect '/categories'
-  #   else
-  #     redirect '/categories/'
-  #   end
-  # end
-
   get '/categories/:id' do
     if logged_in?
       @category = Category.find_by_id(params[:id])
@@ -45,15 +36,13 @@ class CategoriesController < ApplicationController
   end
 
   patch '/categories/:id' do
-    
-    if params[:category_name].strip != "" && !Category.find_by(name: params[:category_name]) 
-      #if you catagory name not taken 
+    if params[:category_name].strip != "" && !Category.find_by(name: params[:category_name]) #if category is empty / cant find the category name
       @category = Category.find_by(id: params[:id])
       @category.update(name: params[:category_name])
       flash[:field_error] = "The category has been updated successfully"
       redirect "/categories/#{@category.id}"
     else
-      flash[:field_error] = "Fields cannot be blank"
+      flash[:field_error] = "Error: Category name must not already exist or be empty"
       redirect to "/categories/#{params[:id]}/edit"
     end
   end
