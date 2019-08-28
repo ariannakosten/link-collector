@@ -21,7 +21,7 @@ class ApplicationController < Sinatra::Base
     end
 
     def current_user
-      @user ||= User.find(session[:user_id])
+      @user ||= User.find(session[:user_id]) #if user is undefined, then evaluate User.find and set @user to the result
     end
     
     def links_valid_params(params)
