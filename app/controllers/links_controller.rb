@@ -21,15 +21,19 @@ class LinksController < ApplicationController
 
   ## creates the link if params are valid and user is logged in ##
   post '/links' do
-    if links_valid_params(params)
-      @user = current_user
-      @category = Category.find_or_create_by(name: params[:category_name])
-      @link = Link.create(name: params[:link_name], description: params[:link_description], category_id: @category.id, user_id: @user.id)
-      flash[:field_error] = "Link successfully added!"
-      redirect to "/links"
+    if logged_in?
+      if links_valid_params(params) 
+        @user = current_user
+        @category = Category.find_or_create_by(name: params[:category_name])
+        @link = Link.create(name: params[:link_name], description: params[:link_description], category_id: @category.id, user_id: @user.id)
+        flash[:field_error] = "Link successfully added!"
+        redirect to "/links"
+      else
+        flash[:field_error] = "All fields must be filled out"
+        redirect to "/links/new"
+      end
     else
-      flash[:field_error] = "All fields must be filled out"
-      redirect to "/links/new"
+        redirect to '/login'
     end
   end
 
@@ -65,17 +69,21 @@ class LinksController < ApplicationController
   
   ## edits the specific link if the user has created it himself and has entered valid params to edit --redirects to link show page ##
   patch '/links/:id' do
-    if links_valid_params(params)
-      @link = Link.find_by(id: params[:id])
-      @link.update(name: params[:link_name], description: params[:link_description])
-      @category = Category.find_or_create_by(name: params[:category_name])
-      @link.category = @category
-      @link.save
-      flash[:feild_error] = "Link successfully updated!"
-      redirect "/links/#{@link.id}"
+    @link = Link.find_by(id: params[:id])
+    if logged_in?
+      if links_valid_params(params) && current_user.links.find{|link| link.id == @link.id}
+        @link.update(name: params[:link_name], description: params[:link_description])
+        @category = Category.find_or_create_by(name: params[:category_name])
+        @link.category = @category
+        @link.save
+        flash[:feild_error] = "Link successfully updated!"
+        redirect "/links/#{@link.id}"
+      else
+        flash[:feild_error] = "All fields must be filled out"
+        redirect to "/links/#{params[:id]}/edit"
+      end
     else
-      flash[:feild_error] = "All fields must be filled out"
-      redirect to "/links/#{params[:id]}/edit"
+        redirect to '/login'
     end
   end
   

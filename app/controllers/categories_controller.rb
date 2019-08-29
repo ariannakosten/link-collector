@@ -40,14 +40,18 @@ class CategoriesController < ApplicationController
 
   ## updates the category name if params are entered correctly ##
   patch '/categories/:id' do
-    if params[:category_name].strip != "" && !Category.find_by(name: params[:category_name]) #if category is empty / cant find the category name
-      @category = Category.find_by(id: params[:id])
-      @category.update(name: params[:category_name])
-      flash[:field_error] = "The category has been updated successfully"
-      redirect "/categories/#{@category.id}"
+    @category = Category.find_by(id: params[:id])
+    if logged_in? && current_user.categories.find{|category| category.id == @category.id} 
+      if params[:category_name].strip != "" && !Category.find_by(name: params[:category_name]) #if category is empty / cant find the category name
+        @category.update(name: params[:category_name])
+        flash[:field_error] = "The category has been updated successfully"
+        redirect "/categories/#{@category.id}"
+      else
+        flash[:field_error] = "Error: Category name must not already exist or be empty"
+        redirect to "/categories/#{params[:id]}/edit"
+      end
     else
-      flash[:field_error] = "Error: Category name must not already exist or be empty"
-      redirect to "/categories/#{params[:id]}/edit"
+        redirect to '/login'
     end
   end
 end
