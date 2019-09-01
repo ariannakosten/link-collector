@@ -35,5 +35,18 @@ class ApplicationController < Sinatra::Base
         true
       end
     end
+    
+    def authorize 
+	    if !logged_in
+		    redirect '/login'
+		    #redirect '/login' if !logged_in
+	    end
+    end
+    
+    def authorize_category(cat)
+	    authenticate
+	    redirect '/home' if !cat || !current_user.categories.include?(cat)
+    end
+    
   end
 end
