@@ -13,4 +13,10 @@
   <input type="submit" value="Sign Up">
 </form><br><br>
 
+<% if @user && @user.errors.any? %>
+  <% @user.errors.full_messages.each do |msg| 
+    <p><%= msg %> </p>
+  <% end %>
+<% end %>
+
 <a href="/">Back to Site Stash</a>  
