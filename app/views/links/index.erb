@@ -8,8 +8,8 @@
 <h2>Link List</h2>
 <ul class = "spacing">
 
+  <h3>Your Links:</h3>
   <% @links.each do |link| %>
-    <h3>Your Links:</h3>
     <li><a href="/links/<%= link.id %>"><%= link.name %></a></li>
   <% end %>
 </ul><br>

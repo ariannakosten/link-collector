@@ -55,5 +55,10 @@ class ApplicationController < Sinatra::Base
 	    redirect '/home' if !cat || !current_user.categories.include?(cat)
     end
     
+    def authorize_link(link)
+	    authenticate
+	    redirect '/home' if !link || !current_user.links.include?(link)
+    end
+    
   end
 end

@@ -39,11 +39,11 @@ class UsersController < ApplicationController
   ## checks to see if user has entered login info correctly --if not redirects to login form-- otherwise finds the user by the params entered nav to home ##
   post '/login' do
     if params[:username] == "" || params[:password] == ""
-       flash[:field_error] = "** A valid email & password are required **"
+      flash[:field_error] = "** A valid email & password are required **"
       redirect '/login'
     else
-    @user = User.find_by(username: params[:username])
-    @user && @user.authenticate(params[:password])
+      @user = User.find_by(username: params[:username])
+      @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect '/home'
     end
