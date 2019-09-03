@@ -27,6 +27,7 @@ class ApplicationController < Sinatra::Base
       @user ||= User.find(session[:user_id]) #if user is undefined, then evaluate User.find and set @user to the result
     end
     
+    ## checks if user is authorized. If they're not logged in or the current_user is not found theyre redirected to login (returns true only for nil)
     def authenticate
       if !logged_in? || current_user.nil?
         redirect '/login'
