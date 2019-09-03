@@ -27,6 +27,12 @@ class ApplicationController < Sinatra::Base
       @user ||= User.find(session[:user_id]) #if user is undefined, then evaluate User.find and set @user to the result
     end
     
+    def authenticate
+      if !logged_in? || current_user.nil?
+        redirect '/login'
+      end
+    end
+    
     ## helps with validating params for editing / adding links/ categories ##
     def links_valid_params(params)
       if params[:link_name].strip == ""  || params[:link_description].strip == "" || params[:category_name].strip == ""
