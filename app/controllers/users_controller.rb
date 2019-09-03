@@ -11,21 +11,14 @@ class UsersController < ApplicationController
   
   ## checks to see if u.n. & password are filled out - creates user redirects to home -- otherwise redirects to login ##
   post '/signup' do
-    # if params[:username] == "" || params[:password] == ""
-    #   flash[:field_error] = "** All fields are required **"
-    #   redirect '/signup'
-    # else 
       @user = User.create(username: params[:username], password: params[:password])
       if @user.save
+        session[:user_id] = @user.id
         redirect '/home'
       else
         erb :'users/signup'
       end
     end
-        #session[:user_id] = @user.id
-        #redirect '/home'
-  #   end
-  # end
 
   ## checks to see if user is logged in and has signedup - directs to home pg --if not directs to login form ##
   get '/login' do 
@@ -65,6 +58,19 @@ class UsersController < ApplicationController
       redirect '/'
     else
       redirect '/'
+    end
+  end
+  
+  get '/search' do
+    # @links = Link.all
+    if params[:search]
+      @cat = Category.find_by(name: params[:search])
+      if @cat.nil? 
+        redirect '/home'
+      else 
+      @links = @cat.links
+       erb :'/links/index'
+     end
     end
   end
 end

@@ -43,13 +43,6 @@ class ApplicationController < Sinatra::Base
       end
     end
     
-    def authorize 
-	    if !logged_in
-		    redirect '/login'
-		    #redirect '/login' if !logged_in
-	    end
-    end
-    
     def authorize_category(cat)
 	    authenticate
 	    redirect '/home' if !cat || !current_user.categories.include?(cat)
@@ -57,7 +50,7 @@ class ApplicationController < Sinatra::Base
     
     def authorize_link(link)
 	    authenticate
-	    redirect '/home' if !link || !current_user.links.include?(link)
+	    redirect '/home' if !link || link.user != current_user
     end
     
   end
